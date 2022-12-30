@@ -8,7 +8,8 @@ from math import pow, sqrt
 import smach
 import smach_ros
 import sys
-
+from sound_play.msg import SoundRequest
+from sound_play.libsoundplay import SoundClient
 
 class Nav(smach.State):
     def __init__(self):
@@ -16,10 +17,7 @@ class Nav(smach.State):
         self.currentseq3 = 0;
         self.currentseq4 = 0;
 
-        smach.State.__init__(self,outcomes=['outcome1'])
-        # rospy.Subscriber("/aruco_2/pose", PoseStamped, self.positionchange2, queue_size=10)
-        # rospy.Subscriber("/aruco_3/pose", PoseStamped, self.positionchange3, queue_size=10)
-        # rospy.Subscriber("/aruco_4/pose", PoseStamped, self.positionchange4, queue_size=10)        
+        smach.State.__init__(self,outcomes=['outcome1'])  
         global cmd 
         cmd = AutoNav()
         cmd.set_initial_pose1()
@@ -34,20 +32,6 @@ class Nav(smach.State):
         cmd.move_goal(4)
         return 'outcome1'
     
-    def positionchange2(self, msg):
-        self.currentseq2 = msg.header.seq
-        # distance = msg.pose.position.z
-        # rospy.loginfo("distance"+str(distance))
-
-    def positionchange3(self, msg):
-        self.currentseq3 = msg.header.seq
-        # distance = msg.pose.position.z
-        # rospy.loginfo("distance"+str(distance))
-    
-    def positionchange4(self, msg):
-        self.currentseq4 = msg.header.seq
-        # distance = msg.pose.position.z
-        # rospy.loginfo("distance"+str(distance))
 
 class Aruco(smach.State):
     def __init__(self):
@@ -66,18 +50,14 @@ class Aruco(smach.State):
         print(4)
         while not rospy.is_shutdown():
             if self.currentseq2<10000:
-                from sound_play.msg import SoundRequest
-                from sound_play.libsoundplay import SoundClient
                 # rospy.init_node('play', anonymous=True)
                 soundhandle = SoundClient()
                 rospy.sleep(1)
                 rospy.loginfo('Playing sound 2.')
                 soundhandle.play(4, 3)
                 rospy.sleep(1)
-                return 'outcome4'
+                return 'outcome2'
             elif self.currentseq3<10000:
-                from sound_play.msg import SoundRequest
-                from sound_play.libsoundplay import SoundClient
                 # rospy.init_node('play', anonymous=True)
                 soundhandle = SoundClient()
                 rospy.sleep(1)
@@ -86,15 +66,13 @@ class Aruco(smach.State):
                 rospy.sleep(1)
                 return 'outcome3'
             elif self.currentseq4<10000:
-                from sound_play.msg import SoundRequest
-                from sound_play.libsoundplay import SoundClient
                 # rospy.init_node('play', anonymous=True)
                 soundhandle = SoundClient()
                 rospy.sleep(1)
                 rospy.loginfo('Playing sound 4.')
                 soundhandle.play(2, 3)
                 rospy.sleep(1)
-                return 'outcome2'       
+                return 'outcome4'       
     
     def positionchange2(self, msg):
         rospy.loginfo("Label 2 detected!")
