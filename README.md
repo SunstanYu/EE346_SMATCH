@@ -12,7 +12,7 @@
 
 The objective is starting the robot from location P1, and the robot should successively move to P2, P3, P4 and back to P1 in that order before moving toward the ArUco marker to recognize the ID of the marker placed near the red triangle in the floor plan. The ArUco marker ID is a number n = 2, 3 or 4 and, upon recognizing the ID, the robot should beep with the buzzer on TurtleBot3 n times, and then move to Pn before coming to a stop.
 
-### ![image-20230114141830897](C:\Users\yjc11\AppData\Roaming\Typora\typora-user-images\image-20230114141830897.png)
+![Image](https://github.com/SunstanYu/EE346_Lab7/raw/master/Image/image-20230114141830897.png)
 
 ### Tasks
 
