@@ -1,4 +1,4 @@
-## Lab7 **Autonomous Navigation with SMACH**
+## Project2 **Autonomous Navigation with SMACH**
 
 ### Contents 
 
